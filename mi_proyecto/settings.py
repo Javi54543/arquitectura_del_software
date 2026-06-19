@@ -2,6 +2,7 @@
 Configuración principal del proyecto Django de la práctica.
 
 Proyecto: mi_proyecto
+Aplicación: primera_app
 """
 
 from pathlib import Path
@@ -21,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'primera_app',
 ]
 
 MIDDLEWARE = [
