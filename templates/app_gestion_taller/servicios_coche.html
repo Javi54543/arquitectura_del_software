@@ -1,0 +1,36 @@
+{% extends 'app_gestion_taller/base.html' %}
+
+{% block titulo %}Servicios del coche{% endblock %}
+
+{% block contenido %}
+<h2>{{ coche.marca }} {{ coche.modelo }}</h2>
+
+<p><strong>Matrícula:</strong> {{ coche.matricula }}</p>
+
+<h3>Historial de servicios</h3>
+
+{% if coche_servicios %}
+<table>
+    <thead>
+        <tr>
+            <th>Servicio</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cs in coche_servicios %}
+        <tr>
+            <td>{{ cs.servicio.nombre }}</td>
+            <td>{{ cs.servicio.descripcion }}</td>
+            <td>{{ cs.fecha }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="mensaje">Este coche no tiene servicios registrados.</p>
+{% endif %}
+
+<p><a href="{% url 'detalle_cliente' coche.cliente.id %}">Volver al cliente</a></p>
+{% endblock %}

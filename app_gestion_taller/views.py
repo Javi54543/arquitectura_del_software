@@ -1,27 +1,37 @@
 import json
 
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Cliente, Coche, Servicio, CocheServicio
 
 
 def lista_clientes(request):
-    clientes = list(Cliente.objects.values('id', 'nombre', 'telefono', 'email'))
-    return JsonResponse(clientes, safe=False)
+    clientes = Cliente.objects.all()
+    return render(
+        request,
+        'app_gestion_taller/lista_clientes.html',
+        {'clientes': clientes},
+    )
 
 
-def buscar_cliente(request, cliente_id):
+def detalle_cliente(request, cliente_id):
     try:
-        cliente = Cliente.objects.values('id', 'nombre', 'telefono', 'email').get(id=cliente_id)
-        return JsonResponse(cliente)
+        cliente = Cliente.objects.get(id=cliente_id)
+        coches = Coche.objects.filter(cliente=cliente)
+        contexto = {
+            'cliente': cliente,
+            'coches': coches,
+        }
+        return render(request, 'app_gestion_taller/detalle_cliente.html', contexto)
     except Cliente.DoesNotExist:
         return JsonResponse({'error': 'Cliente no encontrado'}, status=404)
 
 
-# Mantengo este nombre para conservar la compatibilidad con la práctica anterior.
-def detalle_cliente(request, cliente_id):
-    return buscar_cliente(request, cliente_id)
+# Mantengo este nombre para conservar compatibilidad con la práctica anterior.
+def buscar_cliente(request, cliente_id):
+    return detalle_cliente(request, cliente_id)
 
 
 @csrf_exempt
@@ -137,20 +147,14 @@ def buscar_coches_de_cliente(request, cliente_id):
 def buscar_servicios_de_coche(request, coche_id):
     try:
         coche = Coche.objects.get(id=coche_id)
-        servicios = list(
+        coche_servicios = (
             CocheServicio.objects.filter(coche=coche)
             .select_related('servicio')
-            .values('servicio__id', 'servicio__nombre', 'servicio__descripcion')
         )
-        respuesta = {
-            'coche': {
-                'id': coche.id,
-                'marca': coche.marca,
-                'modelo': coche.modelo,
-                'matricula': coche.matricula,
-            },
-            'servicios': servicios,
+        contexto = {
+            'coche': coche,
+            'coche_servicios': coche_servicios,
         }
-        return JsonResponse(respuesta)
+        return render(request, 'app_gestion_taller/servicios_coche.html', contexto)
     except Coche.DoesNotExist:
         return JsonResponse({'error': 'Coche no encontrado'}, status=404)

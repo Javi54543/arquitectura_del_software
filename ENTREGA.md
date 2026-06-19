@@ -66,3 +66,26 @@ curl -X POST http://127.0.0.1:8000/gestion/servicios/registrar/ \
 -H "Content-Type: application/json" \
 -d '{"coche_id": 1, "nombre": "Cambio de aceite", "descripcion": "Cambio de aceite sintetico"}'
 ```
+
+## Práctica 5 - Plantillas en Django
+
+Se añadieron plantillas HTML para que varias vistas del taller de coches dejen de devolver únicamente JSON y pasen a mostrar páginas web renderizadas con Django.
+
+Elementos incluidos:
+
+- Configuración de `TEMPLATES['DIRS']` con `BASE_DIR / 'templates'`.
+- Carpeta `templates/app_gestion_taller/`.
+- Plantilla base `base.html` con herencia de plantillas.
+- Plantilla `lista_clientes.html` para mostrar todos los clientes en una tabla.
+- Enlace desde el nombre de cada cliente hacia su página de detalle.
+- Plantilla `detalle_cliente.html` para mostrar los datos del cliente y sus coches registrados.
+- Plantilla `servicios_coche.html` para mostrar los servicios realizados a un coche.
+- Uso de etiquetas de plantilla `{{ variable }}`, `{% if %}`, `{% else %}`, `{% for %}` y `{% url %}`.
+
+### Vistas HTML
+
+- `GET /gestion/clientes/`
+- `GET /gestion/clientes/<id>/`
+- `GET /gestion/coches/<id>/servicios/`
+
+Los endpoints POST de la práctica anterior se mantienen para registrar clientes, coches y servicios.

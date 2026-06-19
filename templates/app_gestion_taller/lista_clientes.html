@@ -1,0 +1,32 @@
+{% extends 'app_gestion_taller/base.html' %}
+
+{% block titulo %}Lista de clientes{% endblock %}
+
+{% block contenido %}
+<h2>Clientes del taller</h2>
+
+{% if clientes %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cliente in clientes %}
+        <tr>
+            <td>{{ cliente.id }}</td>
+            <td><a href="{% url 'detalle_cliente' cliente.id %}">{{ cliente.nombre }}</a></td>
+            <td>{{ cliente.telefono }}</td>
+            <td>{{ cliente.email }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="mensaje">No hay clientes registrados en el taller.</p>
+{% endif %}
+{% endblock %}
