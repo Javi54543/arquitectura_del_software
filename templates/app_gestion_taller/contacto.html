@@ -1,0 +1,23 @@
+{% extends 'app_gestion_taller/base.html' %}
+
+{% block titulo %}Contacto{% endblock %}
+
+{% block contenido %}
+<h2>Formulario de contacto</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for campo in formulario %}
+    <div class="campo-formulario">
+        <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+        {{ campo }}
+        {% if campo.errors %}
+        <div class="error">{{ campo.errors }}</div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <button type="submit">Enviar</button>
+</form>
+{% endblock %}

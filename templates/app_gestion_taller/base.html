@@ -60,6 +60,42 @@
             border: 1px solid #ffeeba;
             margin-top: 15px;
         }
+
+        nav a {
+            margin-right: 12px;
+        }
+
+        .campo-formulario {
+            margin-bottom: 14px;
+        }
+
+        input, select, textarea {
+            display: block;
+            width: 100%;
+            max-width: 480px;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 18px;
+            border: 0;
+            background-color: #0645ad;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #04337f;
+        }
+
+        .error {
+            color: #b00020;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
@@ -67,6 +103,11 @@
         <h1>Gestión del taller de coches</h1>
         <nav>
             <a href="{% url 'lista_clientes' %}">Clientes</a>
+            <a href="{% url 'nuevo_cliente' %}">Nuevo cliente</a>
+            <a href="{% url 'nuevo_coche' %}">Nuevo coche</a>
+            <a href="{% url 'nuevo_servicio' %}">Nuevo servicio</a>
+            <a href="{% url 'nuevo_coche_servicio' %}">Asignar servicio</a>
+            <a href="{% url 'contacto' %}">Contacto</a>
         </nav>
     </header>
 
@@ -75,7 +116,7 @@
     </main>
 
     <footer>
-        <p>Práctica 5 - Plantillas en Django | Javier Blanco Vila</p>
+        <p>Práctica 6 - Formularios en Django | Javier Blanco Vila</p>
     </footer>
 </body>
 </html>

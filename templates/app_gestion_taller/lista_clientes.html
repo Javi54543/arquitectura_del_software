@@ -5,6 +5,8 @@
 {% block contenido %}
 <h2>Clientes del taller</h2>
 
+<p><a href="{% url 'nuevo_cliente' %}">Añadir nuevo cliente</a></p>
+
 {% if clientes %}
 <table>
     <thead>
