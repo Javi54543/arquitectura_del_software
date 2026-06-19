@@ -1,0 +1,27 @@
+{% extends 'app_gestion_taller/base.html' %}
+
+{% block titulo %}Detalle del cliente{% endblock %}
+
+{% block contenido %}
+<h2>{{ cliente.nombre }}</h2>
+
+<p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+<p><strong>Email:</strong> {{ cliente.email }}</p>
+
+<h3>Coches registrados</h3>
+
+{% if coches %}
+<ul>
+    {% for coche in coches %}
+    <li>
+        {{ coche.marca }} {{ coche.modelo }} — {{ coche.matricula }}
+        (<a href="{% url 'buscar_servicios_de_coche' coche.id %}">ver servicios</a>)
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="mensaje">Este cliente no tiene coches registrados en el taller.</p>
+{% endif %}
+
+<p><a href="{% url 'lista_clientes' %}">Volver a la lista de clientes</a></p>
+{% endblock %}
