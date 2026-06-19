@@ -1,64 +1,68 @@
-# Documento de entrega
+# Entrega incremental - Práctica Django
 
-**Alumno:** Javier Blanco Vila  
-**Asignatura:** Arquitectura del Software  
-**Repositorio:** `arquitectura_del_software`
+Alumno: Javier Blanco Vila
 
-## Enlace al repositorio
-
-Pegar aquí el enlace al repositorio de GitHub:
-
-```text
+Repositorio:
 https://github.com/Javi54543/arquitectura_del_software
-```
 
 ## Práctica inicial
 
-La primera parte incluye:
-
-- Proyecto Django llamado `mi_proyecto`.
-- Aplicación Django llamada `primera_app`.
-- Vista básica de bienvenida.
-- Archivo `urls.py` dentro de la aplicación.
-- Inclusión de las rutas de la aplicación en `mi_proyecto/urls.py`.
-- Organización mediante ramas `main`, `develop` y `feature/primeraApp`.
+Se creó el proyecto Django base con una primera aplicación, rutas básicas y control de versiones con ramas `main`, `develop` y `feature/primeraApp`.
 
 ## Práctica 3 - Base de datos
 
-Al tratarse de una entrega incremental, se mantiene el proyecto anterior y se añade una nueva aplicación llamada `app_gestion_taller`.
+Se añadió la aplicación `app_gestion_taller` para gestionar una base de datos de un taller de coches.
 
-La práctica 3 incluye:
+Elementos incluidos:
 
-- Alta de `app_gestion_taller` en `INSTALLED_APPS`.
-- Inclusión de las rutas de la aplicación en `mi_proyecto/urls.py` bajo el prefijo `/gestion/`.
-- Modelo `Cliente`, con nombre, teléfono y email.
-- Modelo `Coche`, relacionado con `Cliente` mediante una relación 1-N.
-- Modelo `Servicio`, relacionado con `Coche` mediante una relación N-N.
-- Modelo intermedio `CocheServicio`, con coche, servicio y fecha.
-- Migración inicial de base de datos para los modelos anteriores.
+- Modelo `Cliente` con nombre, teléfono y email.
+- Modelo `Coche` relacionado con `Cliente` mediante una relación 1-N.
+- Modelo `Servicio` relacionado con `Coche` mediante una relación N-N.
+- Modelo intermedio `CocheServicio` para registrar qué servicio recibe cada coche.
 - Registro de los modelos en `admin.py`.
-- Vista JSON para listar clientes.
-- Vista JSON para consultar el detalle de un cliente por su identificador.
+- Vistas JSON para listar clientes y consultar un cliente por ID.
+- Rutas bajo `/gestion/`.
 
-## Rutas principales
+## Práctica 4 - Endpoints de registro y búsqueda
 
-```text
-http://127.0.0.1:8000/
-http://127.0.0.1:8000/admin/
-http://127.0.0.1:8000/gestion/clientes/
-http://127.0.0.1:8000/gestion/clientes/1/
-```
+Se añadieron endpoints para registrar clientes, coches y servicios mediante peticiones POST, y endpoints de consulta mediante peticiones GET.
 
-## Comandos de comprobación
+### Endpoints POST
+
+- `POST /gestion/clientes/registrar/`
+- `POST /gestion/coches/registrar/`
+- `POST /gestion/servicios/registrar/`
+
+### Endpoints GET
+
+- `GET /gestion/clientes/`
+- `GET /gestion/clientes/<id>/`
+- `GET /gestion/coches/matricula/<matricula>/`
+- `GET /gestion/clientes/<id>/coches/`
+- `GET /gestion/coches/<id>/servicios/`
+
+### Ejemplos de prueba con cURL
+
+Registrar cliente:
 
 ```bash
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
+curl -X POST http://127.0.0.1:8000/gestion/clientes/registrar/ \
+-H "Content-Type: application/json" \
+-d '{"nombre": "Juan Perez", "telefono": "123456789", "email": "juan@example.com"}'
 ```
 
-Para crear un administrador:
+Registrar coche:
 
 ```bash
-python manage.py createsuperuser
+curl -X POST http://127.0.0.1:8000/gestion/coches/registrar/ \
+-H "Content-Type: application/json" \
+-d '{"cliente_id": 1, "marca": "Toyota", "modelo": "Corolla", "matricula": "XYZ123"}'
+```
+
+Registrar servicio:
+
+```bash
+curl -X POST http://127.0.0.1:8000/gestion/servicios/registrar/ \
+-H "Content-Type: application/json" \
+-d '{"coche_id": 1, "nombre": "Cambio de aceite", "descripcion": "Cambio de aceite sintetico"}'
 ```
