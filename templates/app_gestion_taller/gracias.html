@@ -1,0 +1,9 @@
+{% extends 'app_gestion_taller/base.html' %}
+
+{% block titulo %}Gracias{% endblock %}
+
+{% block contenido %}
+<h2>Gracias por tu mensaje</h2>
+<p>Nos pondremos en contacto contigo pronto, {{ nombre }}.</p>
+<p><a href="{% url 'lista_clientes' %}">Volver a clientes</a></p>
+{% endblock %}

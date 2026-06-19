@@ -1,0 +1,32 @@
+{% extends 'app_gestion_taller/base.html' %}
+
+{% block titulo %}{{ titulo }}{% endblock %}
+
+{% block contenido %}
+<h2>{{ titulo }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for campo in form %}
+    <div class="campo-formulario">
+        <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+        {{ campo }}
+        {% if campo.help_text %}
+        <small>{{ campo.help_text }}</small>
+        {% endif %}
+        {% if campo.errors %}
+        <div class="error">{{ campo.errors }}</div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    {% if form.non_field_errors %}
+    <div class="error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <button type="submit">Guardar</button>
+</form>
+
+<p><a href="{% url 'lista_clientes' %}">Volver a clientes</a></p>
+{% endblock %}
